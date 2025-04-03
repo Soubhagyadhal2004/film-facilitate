@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 
@@ -17,16 +17,19 @@ interface SeatProps {
 const Seat: React.FC<SeatProps> = ({ 
   id, row, number, type, status, price, onSelect, isSelected 
 }) => {
-  let seatClass = "seat ";
+  // Define classes for different seat states
+  const baseClass = "seat w-8 h-8 m-1 flex items-center justify-center text-xs rounded cursor-pointer transition-colors";
+  
+  let seatClass = baseClass;
   
   if (status === "occupied") {
-    seatClass += "seat-occupied";
+    seatClass += " bg-red-500/60 text-white cursor-not-allowed";
   } else if (isSelected) {
-    seatClass += "seat-selected";
+    seatClass += " bg-cinema-purple text-white";
   } else if (type === "vip") {
-    seatClass += "seat-vip";
+    seatClass += " bg-amber-500/60 hover:bg-amber-500/80 text-white";
   } else {
-    seatClass += "seat-available";
+    seatClass += " bg-blue-500/60 hover:bg-blue-500/80 text-white";
   }
   
   return (
@@ -55,33 +58,45 @@ interface SeatMapProps {
 
 const SeatMap: React.FC<SeatMapProps> = ({ showtime, movie, onProceed }) => {
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  const [allSeats, setAllSeats] = useState<Array<{
+    id: string;
+    row: string;
+    number: number;
+    type: "standard" | "vip";
+    status: "available" | "occupied";
+    price: number;
+  }>>([]);
   
-  // Generate mock seat data
-  const generateSeats = () => {
-    const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-    const seatsPerRow = 12;
-    const seats = [];
-    
-    for (const row of rows) {
-      for (let i = 1; i <= seatsPerRow; i++) {
-        const isVip = row === 'E' || row === 'F';
-        const isRandomlyOccupied = Math.random() > 0.7;
-        
-        seats.push({
-          id: `${row}${i}`,
-          row,
-          number: i,
-          type: isVip ? "vip" : "standard",
-          status: isRandomlyOccupied ? "occupied" : "available",
-          price: isVip ? 15 : 10,
-        });
+  // Generate mock seat data only once when component mounts
+  useEffect(() => {
+    const generateSeats = () => {
+      const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+      const seatsPerRow = 12;
+      const seats = [];
+      
+      for (const row of rows) {
+        for (let i = 1; i <= seatsPerRow; i++) {
+          const isVip = row === 'E' || row === 'F';
+          // Fix: Use a consistent pattern for occupied seats based on seat ID
+          // This ensures occupied seats remain consistent between renders
+          const isOccupied = ((row.charCodeAt(0) + i) % 7 === 0);
+          
+          seats.push({
+            id: `${row}${i}`,
+            row,
+            number: i,
+            type: isVip ? "vip" : "standard",
+            status: isOccupied ? "occupied" : "available",
+            price: isVip ? 15 : 10,
+          });
+        }
       }
-    }
+      
+      return seats;
+    };
     
-    return seats;
-  };
-  
-  const seats = generateSeats();
+    setAllSeats(generateSeats());
+  }, []);
   
   const handleSeatSelect = (seatId: string) => {
     if (selectedSeats.includes(seatId)) {
@@ -101,7 +116,7 @@ const SeatMap: React.FC<SeatMapProps> = ({ showtime, movie, onProceed }) => {
   
   const getTotalPrice = () => {
     return selectedSeats.reduce((total, seatId) => {
-      const seat = seats.find(seat => seat.id === seatId);
+      const seat = allSeats.find(seat => seat.id === seatId);
       return total + (seat ? seat.price : 0);
     }, 0);
   };
@@ -118,6 +133,10 @@ const SeatMap: React.FC<SeatMapProps> = ({ showtime, movie, onProceed }) => {
     
     onProceed(selectedSeats);
   };
+
+  if (allSeats.length === 0) {
+    return <div className="flex justify-center p-12">Loading seats...</div>;
+  }
   
   return (
     <div className="space-y-6">
@@ -130,13 +149,13 @@ const SeatMap: React.FC<SeatMapProps> = ({ showtime, movie, onProceed }) => {
       </div>
       
       <div className="flex flex-col items-center space-y-2">
-        {Array.from(new Set(seats.map(seat => seat.row))).map(row => (
+        {Array.from(new Set(allSeats.map(seat => seat.row))).map(row => (
           <div key={row} className="flex justify-center">
             <div className="w-6 flex items-center justify-center font-medium text-muted-foreground">
               {row}
             </div>
             <div className="flex flex-wrap justify-center">
-              {seats
+              {allSeats
                 .filter(seat => seat.row === row)
                 .map(seat => (
                   <Seat
@@ -159,22 +178,22 @@ const SeatMap: React.FC<SeatMapProps> = ({ showtime, movie, onProceed }) => {
         ))}
       </div>
       
-      <div className="flex justify-center gap-8 mt-8">
+      <div className="flex justify-center gap-8 mt-8 flex-wrap">
         <div className="flex items-center gap-2">
-          <div className="seat-available seat w-6 h-6"></div>
-          <span className="text-sm">Available</span>
+          <div className="w-6 h-6 bg-blue-500/60 rounded"></div>
+          <span className="text-sm">Standard</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="seat-selected seat w-6 h-6"></div>
+          <div className="w-6 h-6 bg-amber-500/60 rounded"></div>
+          <span className="text-sm">VIP</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 bg-cinema-purple rounded"></div>
           <span className="text-sm">Selected</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="seat-occupied seat w-6 h-6"></div>
+          <div className="w-6 h-6 bg-red-500/60 rounded"></div>
           <span className="text-sm">Occupied</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="seat-vip seat w-6 h-6"></div>
-          <span className="text-sm">VIP ($15)</span>
         </div>
       </div>
       
