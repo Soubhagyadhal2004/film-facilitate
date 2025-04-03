@@ -84,10 +84,10 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="font-bold text-lg mb-4">Contact</h3>
             <address className="not-italic text-gray-300 space-y-2">
-              <p>123 Cinema Street</p>
-              <p>Hollywood, CA 90210</p>
-              <p>Phone: (123) 456-7890</p>
-              <p>Email: info@cinetix.com</p>
+              <p>VIT-AP University</p>
+              <p>Amaravati, Andhra Pradesh, India</p>
+              <p>Phone: 9437284825</p>
+              <p>Email: soubhagyadhal12345@gmail.com</p>
             </address>
           </div>
         </div>
