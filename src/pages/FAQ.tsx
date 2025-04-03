@@ -69,6 +69,7 @@ const FAQ: React.FC = () => {
                 <ul className="list-disc pl-5 space-y-1 mt-2">
                   <li>Email: soubhagyadhal12345@gmail.com</li>
                   <li>Phone: 9437284825</li>
+                  <li>Address: VIT-AP University, Amaravati, Andhra Pradesh, India</li>
                   <li>Live chat on our website (bottom right corner)</li>
                 </ul>
               </AccordionContent>

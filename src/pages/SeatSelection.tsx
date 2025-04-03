@@ -5,7 +5,12 @@ import Footer from "@/components/Footer";
 import SeatMap from "@/components/SeatMap";
 import { Movie } from "@/components/MovieCard";
 
-// Mock movie data
+// Get current date for formatting release dates
+const currentDate = new Date();
+const currentYear = currentDate.getFullYear();
+const currentMonth = currentDate.getMonth();
+
+// Mock movie data with current dates
 const mockMovies: Movie[] = [
   {
     id: 1,
@@ -13,7 +18,7 @@ const mockMovies: Movie[] = [
     posterUrl: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
     genre: ["Sci-Fi", "Action", "Thriller"],
     duration: 148,
-    releaseDate: "2023-07-16",
+    releaseDate: new Date(currentYear, currentMonth, 1).toISOString(), // Current month, 1st day
     rating: 8.8
   },
   {
@@ -22,7 +27,7 @@ const mockMovies: Movie[] = [
     posterUrl: "https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
     genre: ["Action", "Crime", "Drama"],
     duration: 152,
-    releaseDate: "2023-07-18",
+    releaseDate: new Date(currentYear, currentMonth, 8).toISOString(), // Current month, 8th day
     rating: 9.0
   },
   {
@@ -31,13 +36,13 @@ const mockMovies: Movie[] = [
     posterUrl: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
     genre: ["Adventure", "Drama", "Sci-Fi"],
     duration: 169,
-    releaseDate: "2023-07-20",
+    releaseDate: new Date(currentYear, currentMonth, 15).toISOString(), // Current month, 15th day
     rating: 8.6
   },
   // Other movies...
 ];
 
-// Mock showtimes
+// Fix the showtimes to use current dates
 const mockShowtimes = [
   { id: 101, movieId: 1, time: "10:30 AM", date: new Date().toISOString() },
   { id: 102, movieId: 1, time: "1:15 PM", date: new Date().toISOString() },
