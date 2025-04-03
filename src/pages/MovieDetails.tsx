@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,12 +8,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Movie } from "@/components/MovieCard";
 
-// Get current date for formatting release dates
-const currentDate = new Date();
-const currentYear = currentDate.getFullYear();
-const currentMonth = currentDate.getMonth();
-
-// Mock movie data with current dates
+// Mock movie data with actual release dates
 const mockMovies: Movie[] = [
   {
     id: 1,
@@ -22,7 +16,7 @@ const mockMovies: Movie[] = [
     posterUrl: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
     genre: ["Sci-Fi", "Action", "Thriller"],
     duration: 148,
-    releaseDate: new Date(currentYear, currentMonth, 1).toISOString(), // Current month, 1st day
+    releaseDate: new Date(2010, 6, 16).toISOString(), // July 16, 2010
     rating: 8.8
   },
   {
@@ -31,7 +25,7 @@ const mockMovies: Movie[] = [
     posterUrl: "https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
     genre: ["Action", "Crime", "Drama"],
     duration: 152,
-    releaseDate: new Date(currentYear, currentMonth, 8).toISOString(), // Current month, 8th day
+    releaseDate: new Date(2008, 6, 18).toISOString(), // July 18, 2008
     rating: 9.0
   },
   {
@@ -40,7 +34,7 @@ const mockMovies: Movie[] = [
     posterUrl: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
     genre: ["Adventure", "Drama", "Sci-Fi"],
     duration: 169,
-    releaseDate: new Date(currentYear, currentMonth, 15).toISOString(), // Current month, 15th day
+    releaseDate: new Date(2014, 10, 7).toISOString(), // November 7, 2014
     rating: 8.6
   },
   {
@@ -49,7 +43,7 @@ const mockMovies: Movie[] = [
     posterUrl: "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
     genre: ["Action", "Sci-Fi"],
     duration: 136,
-    releaseDate: new Date(currentYear, currentMonth, 22).toISOString(), // Current month, 22nd day
+    releaseDate: new Date(1999, 2, 31).toISOString(), // March 31, 1999
     rating: 8.7
   },
   {
@@ -58,7 +52,7 @@ const mockMovies: Movie[] = [
     posterUrl: "https://images.unsplash.com/photo-1616530940355-351fabd9524b?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
     genre: ["Crime", "Drama"],
     duration: 154,
-    releaseDate: new Date(currentYear, currentMonth - 1, 25).toISOString(), // Last month, 25th day
+    releaseDate: new Date(1994, 9, 14).toISOString(), // October 14, 1994
     rating: 8.9
   },
   {
@@ -67,7 +61,7 @@ const mockMovies: Movie[] = [
     posterUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
     genre: ["Crime", "Drama"],
     duration: 175,
-    releaseDate: new Date(currentYear, currentMonth - 1, 10).toISOString(), // Last month, 10th day
+    releaseDate: new Date(1972, 2, 24).toISOString(), // March 24, 1972
     rating: 9.2
   }
 ];
