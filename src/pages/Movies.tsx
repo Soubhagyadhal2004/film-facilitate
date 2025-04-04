@@ -9,77 +9,82 @@ import { useLocation } from "@/contexts/LocationContext";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
-// Mock movie data with theater locations
+// Mock movie data with theater locations - adapted for Indian context
 const mockMovies: (Movie & { theaters: number[] })[] = [
   {
     id: 1,
-    title: "Inception",
+    title: "Jawan",
     posterUrl: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
-    genre: ["Sci-Fi", "Action", "Thriller"],
+    genre: ["Action", "Thriller"],
     duration: 148,
-    releaseDate: new Date(2010, 6, 16).toISOString(), // July 16, 2010
+    releaseDate: new Date(2023, 8, 7).toISOString(),
     rating: 8.8,
     theaters: [1, 2, 3] // Theater IDs where this movie is playing
   },
   {
     id: 2,
-    title: "The Dark Knight",
+    title: "Pathaan",
     posterUrl: "https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
-    genre: ["Action", "Crime", "Drama"],
+    genre: ["Action", "Drama"],
     duration: 152,
-    releaseDate: new Date(2008, 6, 18).toISOString(), // July 18, 2008
+    releaseDate: new Date(2023, 0, 25).toISOString(),
     rating: 9.0,
     theaters: [1, 4, 5]
   },
   {
     id: 3,
-    title: "Interstellar",
+    title: "Kalki 2898 AD",
     posterUrl: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
-    genre: ["Adventure", "Drama", "Sci-Fi"],
+    genre: ["Sci-Fi", "Adventure", "Drama"],
     duration: 169,
-    releaseDate: new Date(2014, 10, 7).toISOString(), // November 7, 2014
+    releaseDate: new Date(2024, 5, 27).toISOString(),
     rating: 8.6,
-    theaters: [2, 3]
+    theaters: [2, 3, 6, 7]
   },
   {
     id: 4,
-    title: "The Matrix",
+    title: "Animal",
     posterUrl: "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
-    genre: ["Action", "Sci-Fi"],
+    genre: ["Action", "Drama"],
     duration: 136,
-    releaseDate: new Date(1999, 2, 31).toISOString(), // March 31, 1999
+    releaseDate: new Date(2023, 11, 1).toISOString(),
     rating: 8.7,
-    theaters: [1, 5]
+    theaters: [1, 5, 8]
   },
   {
     id: 5,
-    title: "Pulp Fiction",
+    title: "Stree 2",
     posterUrl: "https://images.unsplash.com/photo-1616530940355-351fabd9524b?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
-    genre: ["Crime", "Drama"],
+    genre: ["Horror", "Comedy"],
     duration: 154,
-    releaseDate: new Date(1994, 9, 14).toISOString(), // October 14, 1994
+    releaseDate: new Date(2024, 7, 15).toISOString(),
     rating: 8.9,
-    theaters: [3, 4]
+    theaters: [3, 4, 9]
   },
   {
     id: 6,
-    title: "The Godfather",
+    title: "Brahmastra",
     posterUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&h=951&q=80",
-    genre: ["Crime", "Drama"],
+    genre: ["Fantasy", "Action", "Adventure"],
     duration: 175,
-    releaseDate: new Date(1972, 2, 24).toISOString(), // March 24, 1972
+    releaseDate: new Date(2022, 8, 9).toISOString(),
     rating: 9.2,
-    theaters: [2, 5]
+    theaters: [2, 5, 10]
   }
 ];
 
-// Mock theaters data by city
+// Mock theaters data by city - updated for Indian cities
 const theatersByCity: Record<number, number[]> = {
-  1: [1, 2, 3], // New York theaters
-  2: [4, 5], // Los Angeles theaters
-  3: [1, 4], // Chicago theaters
-  4: [2, 5], // Houston theaters
-  5: [3] // Phoenix theaters
+  1: [1, 2, 3], // Mumbai theaters
+  2: [4, 5], // Delhi theaters
+  3: [1, 4, 6], // Bangalore theaters
+  4: [2, 5, 7], // Hyderabad theaters
+  5: [3, 8], // Chennai theaters
+  6: [9, 10], // Kolkata theaters
+  7: [1, 6], // Pune theaters
+  8: [2, 7], // Ahmedabad theaters
+  9: [3, 8], // Jaipur theaters
+  10: [4, 9] // Lucknow theaters
 };
 
 const Movies = () => {

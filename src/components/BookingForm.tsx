@@ -21,8 +21,8 @@ const bookingFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
   phone: z.string().min(10, { message: "Please enter a valid phone number." }),
-  agreeToTerms: z.literal(true, {
-    errorMap: () => ({ message: "You must agree to the terms and conditions." }),
+  agreeToTerms: z.boolean().refine(val => val === true, {
+    message: "You must agree to the terms and conditions."
   }),
 });
 

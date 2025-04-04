@@ -9,23 +9,23 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { cn } from "@/lib/utils";
 import { useLocation } from "@/contexts/LocationContext";
 
-// Sample cities data - in a real app this would come from an API
+// Sample cities data for India
 const cities = [
-  { id: 1, name: "New York", state: "NY", popular: true },
-  { id: 2, name: "Los Angeles", state: "CA", popular: true },
-  { id: 3, name: "Chicago", state: "IL", popular: true },
-  { id: 4, name: "Houston", state: "TX", popular: true },
-  { id: 5, name: "Phoenix", state: "AZ", popular: true },
-  { id: 6, name: "Philadelphia", state: "PA", popular: false },
-  { id: 7, name: "San Antonio", state: "TX", popular: false },
-  { id: 8, name: "San Diego", state: "CA", popular: false },
-  { id: 9, name: "Dallas", state: "TX", popular: false },
-  { id: 10, name: "San Francisco", state: "CA", popular: false },
-  { id: 11, name: "Austin", state: "TX", popular: false },
-  { id: 12, name: "Seattle", state: "WA", popular: false },
-  { id: 13, name: "Denver", state: "CO", popular: false },
-  { id: 14, name: "Boston", state: "MA", popular: false },
-  { id: 15, name: "Miami", state: "FL", popular: false },
+  { id: 1, name: "Mumbai", state: "Maharashtra", popular: true },
+  { id: 2, name: "Delhi", state: "Delhi", popular: true },
+  { id: 3, name: "Bangalore", state: "Karnataka", popular: true },
+  { id: 4, name: "Hyderabad", state: "Telangana", popular: true },
+  { id: 5, name: "Chennai", state: "Tamil Nadu", popular: true },
+  { id: 6, name: "Kolkata", state: "West Bengal", popular: false },
+  { id: 7, name: "Pune", state: "Maharashtra", popular: false },
+  { id: 8, name: "Ahmedabad", state: "Gujarat", popular: false },
+  { id: 9, name: "Jaipur", state: "Rajasthan", popular: false },
+  { id: 10, name: "Lucknow", state: "Uttar Pradesh", popular: false },
+  { id: 11, name: "Surat", state: "Gujarat", popular: false },
+  { id: 12, name: "Kanpur", state: "Uttar Pradesh", popular: false },
+  { id: 13, name: "Nagpur", state: "Maharashtra", popular: false },
+  { id: 14, name: "Indore", state: "Madhya Pradesh", popular: false },
+  { id: 15, name: "Thane", state: "Maharashtra", popular: false },
 ];
 
 const LocationSelect = () => {
@@ -61,7 +61,7 @@ const LocationSelect = () => {
           </div>
           <h1 className="text-3xl font-bold mb-2">Select Your Location</h1>
           <p className="text-muted-foreground">
-            Choose your city to see movie showtimes near you
+            Choose your city to see movie showtimes in India
           </p>
         </div>
         

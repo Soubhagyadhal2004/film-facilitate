@@ -27,13 +27,18 @@ export const useLocation = () => {
 export const LocationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   
-  // Sample cities data - in a real app this would come from an API or be more complete
+  // Indian cities data - in a real app this would come from an API or be more complete
   const cities: Record<number, City> = {
-    1: { id: 1, name: "New York", state: "NY" },
-    2: { id: 2, name: "Los Angeles", state: "CA" },
-    3: { id: 3, name: "Chicago", state: "IL" },
-    4: { id: 4, name: "Houston", state: "TX" },
-    5: { id: 5, name: "Phoenix", state: "AZ" },
+    1: { id: 1, name: "Mumbai", state: "Maharashtra" },
+    2: { id: 2, name: "Delhi", state: "Delhi" },
+    3: { id: 3, name: "Bangalore", state: "Karnataka" },
+    4: { id: 4, name: "Hyderabad", state: "Telangana" },
+    5: { id: 5, name: "Chennai", state: "Tamil Nadu" },
+    6: { id: 6, name: "Kolkata", state: "West Bengal" },
+    7: { id: 7, name: "Pune", state: "Maharashtra" },
+    8: { id: 8, name: "Ahmedabad", state: "Gujarat" },
+    9: { id: 9, name: "Jaipur", state: "Rajasthan" },
+    10: { id: 10, name: "Lucknow", state: "Uttar Pradesh" },
   };
   
   // Load saved location from localStorage
