@@ -1,16 +1,19 @@
-
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { User, Film, TicketIcon, LogIn, Menu, X } from "lucide-react";
+import { User, Film, TicketIcon, LogIn, Menu, X, MapPin } from "lucide-react";
+import { useLocation as useRouterLocation } from "react-router-dom";
+import { useLocation } from "@/contexts/LocationContext";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const location = useLocation();
+  const { pathname } = useRouterLocation();
+  const navigate = useNavigate();
+  const { cityName } = useLocation();
   
-  // Hide header on login and register pages
-  if (location.pathname === "/login" || location.pathname === "/register") {
+  // Hide header on login, register and location pages
+  if (pathname === "/login" || pathname === "/register" || pathname === "/location") {
     return null;
   }
 
@@ -21,6 +24,17 @@ const Header: React.FC = () => {
           <TicketIcon className="h-6 w-6 text-cinema-purple" />
           <span className="font-bold text-xl cinema-text-gradient">CineTix</span>
         </Link>
+        
+        {/* Location Selector */}
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="hidden md:flex items-center gap-1 text-muted-foreground hover:text-foreground"
+          onClick={() => navigate("/location")}
+        >
+          <MapPin size={16} />
+          <span>{cityName}</span>
+        </Button>
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
@@ -77,6 +91,19 @@ const Header: React.FC = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t p-4 animate-fade-in">
           <nav className="flex flex-col space-y-4">
+            {/* Location Selector (Mobile) */}
+            <Button 
+              variant="ghost" 
+              className="flex items-center justify-start gap-2 font-medium hover:text-cinema-purple transition-colors"
+              onClick={() => {
+                setIsMenuOpen(false);
+                navigate("/location");
+              }}
+            >
+              <MapPin size={18} />
+              <span>{cityName}</span>
+            </Button>
+            
             <Link 
               to="/" 
               className="flex items-center gap-2 font-medium hover:text-cinema-purple transition-colors"

@@ -18,6 +18,8 @@ import FAQ from "./pages/FAQ";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Refund from "./pages/Refund";
+import LocationSelect from "./pages/LocationSelect";
+import { LocationProvider } from "./contexts/LocationContext";
 
 const queryClient = new QueryClient();
 
@@ -28,21 +30,24 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/movie/:id" element={<MovieDetails />} />
-            <Route path="/seat-selection/:movieId/:showtimeId" element={<SeatSelection />} />
-            <Route path="/checkout/:movieId/:showtimeId/:selectedSeats" element={<Checkout />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/refund" element={<Refund />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <LocationProvider>
+            <Routes>
+              <Route path="/location" element={<LocationSelect />} />
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/movie/:id" element={<MovieDetails />} />
+              <Route path="/seat-selection/:movieId/:showtimeId" element={<SeatSelection />} />
+              <Route path="/checkout/:movieId/:showtimeId/:selectedSeats" element={<Checkout />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/refund" element={<Refund />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </LocationProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
