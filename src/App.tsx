@@ -19,6 +19,7 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Refund from "./pages/Refund";
 import LocationSelect from "./pages/LocationSelect";
+import Movies from "./pages/Movies";
 import { LocationProvider } from "./contexts/LocationContext";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/movies" element={<Movies />} />
               <Route path="/movie/:id" element={<MovieDetails />} />
               <Route path="/seat-selection/:movieId/:showtimeId" element={<SeatSelection />} />
               <Route path="/checkout/:movieId/:showtimeId/:selectedSeats" element={<Checkout />} />
