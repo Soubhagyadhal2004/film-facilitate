@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "@/components/ui/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import TicketPDFButton from "@/components/TicketPDF";
 
 // Mock booking data
 const mockBookings = [
@@ -77,7 +77,8 @@ const Dashboard = () => {
   };
   
   const handleDownloadTicket = (bookingId: string) => {
-    // In a real app, this would generate and download a PDF ticket
+    // We keep this for backward compatibility, but the actual PDF download
+    // is now handled by the TicketPDFButton component
     toast({
       title: "Ticket Downloaded",
       description: `Ticket for booking ${bookingId} has been downloaded.`,
@@ -136,15 +137,12 @@ const Dashboard = () => {
                       </div>
                       
                       <div className="flex flex-wrap md:flex-nowrap gap-3 mt-4">
-                        <Button 
-                          size="sm" 
-                          variant="outline" 
+                        <TicketPDFButton
+                          ticket={booking}
+                          variant="outline"
+                          size="sm"
                           className="flex-1"
-                          onClick={() => handleDownloadTicket(booking.id)}
-                        >
-                          <Download className="h-4 w-4 mr-2" />
-                          Download Ticket
-                        </Button>
+                        />
                         <Button 
                           size="sm" 
                           variant="destructive" 
@@ -210,10 +208,12 @@ const Dashboard = () => {
                         </div>
                       </div>
                       
-                      <Button variant="outline" size="sm" className="mt-2" onClick={() => handleDownloadTicket(booking.id)}>
-                        <Download className="h-4 w-4 mr-2" />
-                        Download Receipt
-                      </Button>
+                      <TicketPDFButton 
+                        ticket={booking}
+                        variant="outline" 
+                        size="sm" 
+                        className="mt-2"
+                      />
                     </div>
                   </div>
                 </div>
