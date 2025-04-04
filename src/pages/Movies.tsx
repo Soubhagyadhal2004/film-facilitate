@@ -5,9 +5,12 @@ import { Search } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MovieCard, { Movie } from "@/components/MovieCard";
+import { useLocation } from "@/contexts/LocationContext";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
-// Using the same mock movie data from Index.tsx
-const mockMovies: Movie[] = [
+// Mock movie data with theater locations
+const mockMovies: (Movie & { theaters: number[] })[] = [
   {
     id: 1,
     title: "Inception",
@@ -15,7 +18,8 @@ const mockMovies: Movie[] = [
     genre: ["Sci-Fi", "Action", "Thriller"],
     duration: 148,
     releaseDate: new Date(2010, 6, 16).toISOString(), // July 16, 2010
-    rating: 8.8
+    rating: 8.8,
+    theaters: [1, 2, 3] // Theater IDs where this movie is playing
   },
   {
     id: 2,
@@ -24,7 +28,8 @@ const mockMovies: Movie[] = [
     genre: ["Action", "Crime", "Drama"],
     duration: 152,
     releaseDate: new Date(2008, 6, 18).toISOString(), // July 18, 2008
-    rating: 9.0
+    rating: 9.0,
+    theaters: [1, 4, 5]
   },
   {
     id: 3,
@@ -33,7 +38,8 @@ const mockMovies: Movie[] = [
     genre: ["Adventure", "Drama", "Sci-Fi"],
     duration: 169,
     releaseDate: new Date(2014, 10, 7).toISOString(), // November 7, 2014
-    rating: 8.6
+    rating: 8.6,
+    theaters: [2, 3]
   },
   {
     id: 4,
@@ -42,7 +48,8 @@ const mockMovies: Movie[] = [
     genre: ["Action", "Sci-Fi"],
     duration: 136,
     releaseDate: new Date(1999, 2, 31).toISOString(), // March 31, 1999
-    rating: 8.7
+    rating: 8.7,
+    theaters: [1, 5]
   },
   {
     id: 5,
@@ -51,7 +58,8 @@ const mockMovies: Movie[] = [
     genre: ["Crime", "Drama"],
     duration: 154,
     releaseDate: new Date(1994, 9, 14).toISOString(), // October 14, 1994
-    rating: 8.9
+    rating: 8.9,
+    theaters: [3, 4]
   },
   {
     id: 6,
@@ -60,25 +68,42 @@ const mockMovies: Movie[] = [
     genre: ["Crime", "Drama"],
     duration: 175,
     releaseDate: new Date(1972, 2, 24).toISOString(), // March 24, 1972
-    rating: 9.2
+    rating: 9.2,
+    theaters: [2, 5]
   }
 ];
+
+// Mock theaters data by city
+const theatersByCity: Record<number, number[]> = {
+  1: [1, 2, 3], // New York theaters
+  2: [4, 5], // Los Angeles theaters
+  3: [1, 4], // Chicago theaters
+  4: [2, 5], // Houston theaters
+  5: [3] // Phoenix theaters
+};
 
 const Movies = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const { selectedCity, cityName } = useLocation();
+  const navigate = useNavigate();
+  
+  // Get theaters for the selected city
+  const cityTheaters = selectedCity ? theatersByCity[selectedCity.id] || [] : [];
   
   // Get all unique genres
   const allGenres = Array.from(
     new Set(mockMovies.flatMap(movie => movie.genre))
   ).sort();
   
-  // Filter movies based on search query and selected genres
+  // Filter movies based on search query, selected genres, and city theaters
   const filteredMovies = mockMovies.filter(movie => {
     const matchesSearch = movie.title.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesGenre = selectedGenres.length === 0 || 
       movie.genre.some(g => selectedGenres.includes(g));
-    return matchesSearch && matchesGenre;
+    const matchesCity = movie.theaters.some(theaterId => cityTheaters.includes(theaterId));
+    
+    return matchesSearch && matchesGenre && matchesCity;
   });
   
   const toggleGenre = (genre: string) => {
@@ -96,8 +121,8 @@ const Movies = () => {
       {/* Page Title */}
       <section className="bg-cinema-blue text-white py-8">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold">Browse All Movies</h1>
-          <p className="text-white/80 mt-2">Discover and book your favorite movies</p>
+          <h1 className="text-3xl font-bold">Movies in {cityName}</h1>
+          <p className="text-white/80 mt-2">Discover and book your favorite movies in {cityName}</p>
         </div>
       </section>
       
@@ -133,13 +158,27 @@ const Movies = () => {
                 ))}
               </div>
             </div>
+            
+            {/* Location change button */}
+            <div className="bg-white rounded-md shadow p-4 space-y-3">
+              <h3 className="font-medium text-lg">Location</h3>
+              <p className="text-sm text-gray-600">{cityName}</p>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full" 
+                onClick={() => navigate("/location")}
+              >
+                Change Location
+              </Button>
+            </div>
           </div>
           
           {/* Movies Grid */}
           <div className="flex-1">
             <div className="mb-4">
               <p className="text-gray-600">
-                Showing {filteredMovies.length} of {mockMovies.length} movies
+                Showing {filteredMovies.length} movies in {cityName}
               </p>
             </div>
             
@@ -151,7 +190,7 @@ const Movies = () => {
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-gray-600">No movies found matching your criteria.</p>
+                <p className="text-gray-600">No movies found in {cityName} matching your criteria.</p>
                 <button 
                   onClick={() => {
                     setSearchQuery("");
